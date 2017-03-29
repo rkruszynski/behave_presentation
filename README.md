@@ -1,5 +1,5 @@
 # behave_presentation
-Django aplication and behave e2e tests for it
+## Django aplication and behave e2e tests for it
 
 
 ### How to start app for the first time:
@@ -18,7 +18,7 @@ cd django-app
 python manage.py runserver
 ```
 
-How to run behave tests:
+### How to run behave tests:
 ```cd behave-app
 # One feature file:
 behave feature_path\feature_name
