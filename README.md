@@ -18,9 +18,16 @@ python manage.py runserver
 ```
 
 ### How to run behave tests:
+(make sure that you start selenium server before)
 ```cd behave-app
 # One feature file:
 behave feature_path\feature_name
 # All features in folder:
 behave feature_path
+```
+
+Selenium server is attached to this project. You can run it by:
+```
+cd behave-app\selenium
+java -jar selenium-server-standalone-2.53.1.jar
 ```
