@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Test app</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+
+    <body>
+        <div class="jumbotron">
+            <h3 class="title-header">
+                <img height="30" src="http://i968.photobucket.com/albums/ae167/txranger190/OOTP%20Requests/batman-logo_zps1e60dbac.png">
+                App for training! :)
+            </h3>
+
+            {% if user.is_authenticated %}
+            <p class="welcome-label" id="logged_user" >
+                Hello
+                <a href="{% url 'user_profile' user_id=user.id %}">{{ user.username }}</a>
+            </p>
+            {% endif %}
+
+        </div>
+
+        <div class="container">
+            {% if user.is_authenticated %}
+
+            <ul class="nav nav-tabs nav-justified">
+              <li><a id = "main_page" href="/app">Main page</a></li>
+              <li><a id = "foo" href="/foo">Foo</a></li>
+              <li><a id = "new_user" href="/new_user">New user</a></li>
+              <li><a id = "logs" href="/logs">Logs</a></li>
+            </ul>
+
+            <br><br>
+            {% endif %}
+
+        {% block content %}
+        {% endblock %}
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+    <h3>User profile:</h3>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>First name: {{ user.first_name }}</p>
+    <p>Last name: {{ user.last_name }}</p>
+    <p>Location: {{  user_profile.location }}</p>
+    <p>Administrator: {{  user.is_staff }}</p>
+    <p>Account active: {{  user.is_active }}</p>
+    <p>Last login: {{  user.last_login }}</p>
+    <p>Account created: {{  user.date_joined }}</p>
+
+    <a class="btn btn-primary" id="logout_button" href="/logout">Logout</a>
+
+{% endblock %}
