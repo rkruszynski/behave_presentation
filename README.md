@@ -10,7 +10,12 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 ```
+There are several features in final_feature\ If you want to run those: make sure that you have user with login 'admin' and password 'test1234'. This can be the user created with 'createsuperuser' 
+
 How to run behave tests:
 ```cd behave-app
-behave features\test_name.feature
+# One feature file:
+behave feature_path\feature_name
+# All features in folder:
+behave feature_path
 ```
