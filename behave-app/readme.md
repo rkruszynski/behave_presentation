@@ -3,7 +3,8 @@ This is not a 'production version' of e2e tests. There can be found some misteak
 Some of various problems:
 - there is no checking if user is created correctly (in real e2e tests this often causes 'false positive' or just wrong results for test)
 - docstrings are only in cfparse.py file
-- usernames and passwords are repeated in feature files, this is a wrong idea.
+- usernames and passwords are repeated in feature files, this is a wrong idea. This can be fixed by creating new step to log as last created user/first created user (all informations needed we have already in context!)
+- docstrings are only on cfparse_steps. 
 
 
 ### Final_features
