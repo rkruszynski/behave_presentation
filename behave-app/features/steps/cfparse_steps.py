@@ -8,7 +8,7 @@ Parsed steps for Training app
 
 import parse
 from behave import given, when, then, use_step_matcher, register_type
-from page_objects import page_objects_dict
+from page_objects import page_objects_dict, find_element
 from time import sleep
 
 use_step_matcher("cfparse")
@@ -61,23 +61,17 @@ def step_impl(context, admin, login, password, phone_number, location):
     :param str " admin" set user as admin
     :param int phone_number: telefone number (up to 9 digits)
     """
-    new_user_xpath = page_objects_dict['new_user']
-    context.browser.find_element_by_xpath(new_user_xpath).click()
-    new_user_login_xpath = page_objects_dict['new_user_username']
-    context.browser.find_element_by_xpath(new_user_login_xpath).send_keys(login)
-    new_user_password_xpath = page_objects_dict['new_user_password']
-    context.browser.find_element_by_xpath(new_user_password_xpath).send_keys(password)
+    find_element(context, 'new_user').click()
+    find_element(context, 'new_user_username').send_keys(login)
+    find_element(context, 'new_user_password').send_keys(password)
 
     if admin:
-        is_admin_xpath = page_objects_dict['new_user_is_admin']
-        context.browser.find_element_by_xpath(is_admin_xpath).click()
+        find_element(context, 'new_user_is_admin').click()
     if location:
-        is_location_xpath = page_objects_dict['new_user_location']
-        context.browser.find_element_by_xpath(is_location_xpath).send_keys(location)
+        find_element(context, 'new_user_location').send_keys(location)
     if phone_number:
-        phone_number_xpath = page_objects_dict['phone_number']
-        context.browser.find_element_by_xpath(phone_number_xpath).clear()
-        context.browser.find_element_by_xpath(phone_number_xpath).send_keys(phone_number)
+        phone_number = find_element(context, 'phone_number')
+        phone_number.clear()
+        phone_number.send_keys(phone_number)
 
-    submit_button = page_objects_dict['new_user_submit']
-    context.browser.find_element_by_xpath(submit_button).click()
+    find_element(context, 'new_user_submit').click()

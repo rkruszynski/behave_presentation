@@ -38,3 +38,11 @@ page_objects_dict = {
     'logout_button': '//*[@id="logout_button"]',
 
 }
+
+
+def find_element(context, xpath, *args):
+    if not args:
+        return context.browser.find_element_by_xpath(page_objects_dict[xpath])
+    else:
+        new_xpath = xpath.format(*args)
+        return context.browser.find_element_by_xpath(page_objects_dict[new_xpath])
