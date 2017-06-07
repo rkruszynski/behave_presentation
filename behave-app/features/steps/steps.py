@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 Steps for Training app
 """
 
-from page_objects import page_objects_dict
+from page_objects import page_objects_dict, find_element
 from behave import given, when, then
 from time import strftime
 from settings import base as settings
@@ -13,15 +13,12 @@ from settings import base as settings
 
 @when('I click "{xpath_name}" element')
 def step_impl(context, xpath_name):
-    xpath = page_objects_dict[xpath_name]
-    context.browser.find_element_by_xpath(xpath).click()
+    find_element(context, xpath_name).click()
 
 
 @when('I type "{text}" in "{element}" element')
 def step_impl(context, text, element):
-    xpath = page_objects_dict[element]
-    webelement = context.browser.find_element_by_xpath(xpath)
-    webelement.send_keys(text)
+    find_element(context, element).send_keys(text)
 
 
 @given('I open main page')
@@ -31,17 +28,14 @@ def step_impl(context):
 
 @when('I open add new user page')
 def step_impl(context):
-    xpath = page_objects_dict['new_user']
-    context.browser.find_element_by_xpath(xpath).click()
+    find_element(context, 'new_user').click()
 
 
 @then('I can see "{text}" in "{element}" element')
 def step_impl(context, text, element):
-    xpath = page_objects_dict[element]
-    webelement = context.browser.find_element_by_xpath(xpath)
-    webelement_text = webelement.text.strip()
-    message = 'Your element has "{}" instead of "{}"'.format(webelement_text, text)
-    assert  webelement_text == text, message
+    text_on_element = find_element(context, element).text.strip()
+    message = 'Your element has "{}" instead of "{}"'.format(text_on_element, text)
+    assert text_on_element == text, message
 
 
 @when('I create user with "{username}" username and "{password}" password')
@@ -64,8 +58,7 @@ def step_impl(context, usertype, username, password):
         """
     )
     if usertype == "admin":
-        xpath = page_objects_dict['new_user_is_admin']
-        context.browser.find_element_by_xpath(xpath).click()
+        find_element(context, 'new_user_is_admin').click()
 
     context.execute_steps(
         """
@@ -113,18 +106,14 @@ def step_impl(context, login, password):
 
 @then('I check log data for all users')
 def step_impl(context):
-    log_page_xpath = page_objects_dict['logs']
-    context.browser.find_element_by_xpath(log_page_xpath).click()
+    find_element(context, 'logs').click()
     # I don't check if admin has correct login time. But I forgot why ;)
     # You can easily remove list comprehension and below iterate through all keys
     users = [x for x in context.scenario_users['all_users'].keys() if x != 'admin']
     for user in users:
-        search_field = page_objects_dict['search_box']
-        context.browser.find_element_by_xpath(search_field).send_keys(user)
-        search_button = page_objects_dict['search_button']
-        context.browser.find_element_by_xpath(search_button).click()
-        time_data_xpath = page_objects_dict['last_log_time']
-        page_logged_time = str(context.browser.find_element_by_xpath(time_data_xpath).text)
+        find_element(context, 'search_box').send_keys(user)
+        find_element(context, 'search_button').click()
+        page_logged_time = str(find_element(context, 'last_log_time').text)
         context_logged_time = context.scenario_users['all_users'][user]['log_time']
         message = 'User: "{}" In context: "{}" and on page: "{}"'.format(user, context_logged_time, page_logged_time)
         assert context_logged_time in page_logged_time, message
